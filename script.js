@@ -39,7 +39,7 @@ form.addEventListener("submit", (e)=> {
 });
 
 function checkWeather(city){
-    const url = `https://api.weatherapi.com/v1/current.json?key=${key.API_Key}&q=${city}`;
+    const url = `https://api.weatherapi.com/v1/current.json?key=00d9fac9fa5d462d9b591310261602&q=${city}`;
 
     fetch(url).then(i => i.json()).then(i => {
         try{
