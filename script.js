@@ -1,4 +1,4 @@
-import {key} from "./key.js";
+
 
 const inputBox = document.querySelector(".inputBox");
 const form = document.querySelector("#sForm");
