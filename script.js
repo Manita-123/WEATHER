@@ -1,5 +1,6 @@
 const inputBox = document.querySelector(".inputBox");
 const form = document.querySelector("#sForm");
+const btn = document.querySelector("#sBtn");
 const weatherImg = document.querySelector(".weather-img");
 const temp = document.querySelector(".temp");
 const desc = document.querySelector(".desc");
@@ -16,11 +17,23 @@ const weatherBody = document.querySelector(".weather-body");
 
 const dayName = (date, locale) => date.toLocaleDateString(locale, { weekday: 'long' });
 
-let day = dayName(new Date());;
+let day = dayName(new Date());
+
+btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    checkWeather(inputBox.value);
+})
 
 form.addEventListener("submit", (e)=> {
     e.preventDefault();
-    let newValue = inputBox.value.trim();
+
+    checkWeather(inputBox.value);
+});
+
+function checkWeather(city){
+    const url = `https://api.weatherapi.com/v1/current.json?key=00d9fac9fa5d462d9b591310261602&q=${city}`;
+
+    let newValue = city;
     let oldValue = sessionStorage.getItem("lastInput");
 
     // Check if same value
@@ -32,19 +45,15 @@ form.addEventListener("submit", (e)=> {
     // Store new value
     sessionStorage.setItem("lastInput", newValue);
 
-    // Call API only if value is different
-    checkWeather(newValue);
-});
-
-function checkWeather(city){
-    const url = `https://api.weatherapi.com/v1/current.json?key=00d9fac9fa5d462d9b591310261602&q=${city}`;
-
     fetch(url).then(i => i.json()).then(i => {
         try{
         console.log(i);
         inputBox.innerHTML = "";
+
+        document.querySelector(".show-error").style.display ="none";
         
         weatherBody.style.display ="flex";
+        
 
         h3.innerHTML = `${i.location.name} , ${i.location.country}`;
         document.querySelector(".day").innerHTML = day;
@@ -65,6 +74,7 @@ function checkWeather(city){
         lastUpdate.innerHTML = ` Last Updated: ${i.current.last_updated}`;
         }
         catch(err){
+            weatherBody.style.display ="none";
             console.warn("Fetch failed");
         }
 

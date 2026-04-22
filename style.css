@@ -97,7 +97,9 @@ h3+p , .desc{
     position: relative;
 }
 
-.weather-img{width: 30%; margin: auto; }
+.weather-img{width: 20%; margin: auto; }
+
+.weather-img:hover{width: 22%; }
 
 .weather-box .temp sup{
     font-size: 20px;
